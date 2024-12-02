@@ -27,9 +27,12 @@ def search():
 
 @app.route('/results')
 def results():
-    search_term = session['search_term']
+    search_term = session.get('search_term')
+    if not search_term:
+        return "No search term found. Please go back and search first.", 400
     page = get_page(search_term)
     return render_template("results.html", page=page)
+
 
 
 def get_page(search_term):
